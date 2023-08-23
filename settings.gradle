@@ -1,0 +1,4 @@
+Properties props = new Properties()
+file('config.properties').withInputStream { props.load(it) }
+
+rootProject.name = 'db_practicum_' + props["TEAM_NAME"]

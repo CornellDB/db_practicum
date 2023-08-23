@@ -1,0 +1,61 @@
+import com.github.sherter.googlejavaformatgradleplugin.GoogleJavaFormat
+
+plugins {
+    id 'java'
+    id 'com.github.sherter.google-java-format' version '0.9'
+
+}
+
+Properties props = new Properties()
+file('config.properties').withInputStream { props.load(it) }
+
+googleJavaFormat {
+    toolVersion = '1.17.0'
+}
+
+group 'cornell.cs.db'
+version props["DELIVERABLE"]
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+
+    implementation group: 'com.github.jsqlparser', name: 'jsqlparser', version: '4.6'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+build {
+    dependsOn verifyGoogleJavaFormat
+}
+
+assemble {
+    dependsOn verifyGoogleJavaFormat
+}
+
+tasks.register('format', GoogleJavaFormat) {
+    source sourceSets*.allJava
+    include '**/*.java'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = 18
+}
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'Cornell DB Practicum',
+                'Implementation-Version': version,
+                'Main-Class': 'common.Interpreter'
+    }
+
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
