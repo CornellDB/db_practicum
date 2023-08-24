@@ -3,6 +3,8 @@ package operator;
 import common.Tuple;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.List;
+
 import net.sf.jsqlparser.schema.Column;
 
 /**
@@ -32,6 +34,20 @@ public abstract class Operator {
    * @return next Tuple, or null if we are at the end
    */
   public abstract Tuple getNextTuple();
+
+  /**
+   * Collects all tuples of this operator.
+   * @return A list of Tuples.
+   */
+  public List<Tuple> getAllTuples() {
+    Tuple t;
+    List<Tuple> tuples = new ArrayList<>();
+    while ((t = getNextTuple()) != null) {
+      tuples.add(t);
+    }
+
+    return tuples;
+  }
 
   /**
    * Iterate through output of operator and send it all to the specified printStream)

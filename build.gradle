@@ -52,7 +52,7 @@ jar {
     manifest {
         attributes 'Implementation-Title': 'Cornell DB Practicum',
                 'Implementation-Version': version,
-                'Main-Class': 'common.Interpreter'
+                'Main-Class': 'compiler.Compiler'
     }
 
     from {
