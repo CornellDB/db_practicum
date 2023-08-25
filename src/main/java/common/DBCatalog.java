@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import net.sf.jsqlparser.schema.Column;
 import net.sf.jsqlparser.schema.Table;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Class to contain information about database - names of tables, schema of each table and file
@@ -17,6 +19,7 @@ import net.sf.jsqlparser.schema.Table;
  * <p>Call by using DBCatalog.getInstance();
  */
 public class DBCatalog {
+  private final Logger logger = LogManager.getLogger();
 
   private final HashMap<String, ArrayList<Column>> tables;
   private static DBCatalog db;
@@ -58,7 +61,7 @@ public class DBCatalog {
       }
       br.close();
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error(e.getMessage());
     }
   }
 }

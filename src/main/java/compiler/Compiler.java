@@ -10,12 +10,14 @@ import net.sf.jsqlparser.parser.CCJSqlParserUtil;
 import net.sf.jsqlparser.statement.Statement;
 import net.sf.jsqlparser.statement.Statements;
 import operator.Operator;
+import org.apache.logging.log4j.*;
 
 /**
  * Top level harness class; reads queries from an input file one at a time, processes them and sends
  * output to file or to System depending on flag.
  */
 public class Compiler {
+  private static final Logger logger = LogManager.getLogger();
 
   private static String outputDir;
   private static String inputDir;
@@ -47,7 +49,7 @@ public class Compiler {
       int counter = 1; // for numbering output files
       for (Statement statement : statements.getStatements()) {
 
-        System.out.println("Processing query: " + statement);
+        logger.info("Processing query: " + statement);
 
         try {
           Operator plan = queryPlanBuilder.buildPlan(statement);
@@ -59,12 +61,12 @@ public class Compiler {
             plan.dump(System.out);
           }
         } catch (Exception e) {
-          e.printStackTrace();
+          logger.error(e.getMessage());
         }
       }
     } catch (Exception e) {
       System.err.println("Exception occurred in interpreter");
-      e.printStackTrace();
+      logger.error(e.getMessage());
     }
   }
 }

@@ -6,6 +6,8 @@ import net.sf.jsqlparser.parser.CCJSqlParserUtil;
 import net.sf.jsqlparser.statement.Statement;
 import net.sf.jsqlparser.statement.Statements;
 import net.sf.jsqlparser.statement.select.Select;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -13,6 +15,8 @@ import org.junit.jupiter.api.Test;
  * them to screen; then extracts SelectBody from each query and also prints it to screen.
  */
 public class ParserExample {
+  private final Logger logger = LogManager.getLogger();
+
   @Test
   public void parserExampleTest() {
     try {
@@ -25,18 +29,18 @@ public class ParserExample {
 
       String str = Files.readString(Path.of(queriesFile));
 
-      System.out.println(str);
+      logger.info(str);
 
       Statements statements =
           CCJSqlParserUtil.parseStatements("SELECT * FROM tab1; SELECT * FROM tab2");
       for (Statement statement : statements.getStatements()) {
-        System.out.println("Read statement: " + statement);
+        logger.info("Read statement: " + statement);
         Select select = (Select) statement;
-        System.out.println("Select body is " + select.getSelectBody());
+        logger.info("Select body is " + select.getSelectBody());
       }
     } catch (Exception e) {
       System.err.println("Exception occurred during parsing");
-      e.printStackTrace();
+      logger.error(e.getMessage());
     }
   }
 }
