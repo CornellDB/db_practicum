@@ -49,13 +49,17 @@ public class Compiler {
 
         System.out.println("Processing query: " + statement);
 
-        Operator plan = queryPlanBuilder.buildPlan(statement);
+        try {
+          Operator plan = queryPlanBuilder.buildPlan(statement);
 
-        if (outputToFiles) {
-          File outfile = new File(outputDir + "/query" + counter++);
-          plan.dump(new PrintStream(outfile));
-        } else {
-          plan.dump(System.out);
+          if (outputToFiles) {
+            File outfile = new File(outputDir + "/query" + counter++);
+            plan.dump(new PrintStream(outfile));
+          } else {
+            plan.dump(System.out);
+          }
+        } catch (Exception e) {
+          e.printStackTrace();
         }
       }
     } catch (Exception e) {

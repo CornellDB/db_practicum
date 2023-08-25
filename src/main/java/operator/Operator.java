@@ -4,7 +4,6 @@ import common.Tuple;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
-
 import net.sf.jsqlparser.schema.Column;
 
 /**
@@ -37,6 +36,7 @@ public abstract class Operator {
 
   /**
    * Collects all tuples of this operator.
+   *
    * @return A list of Tuples.
    */
   public List<Tuple> getAllTuples() {

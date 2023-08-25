@@ -60,6 +60,9 @@ $ git rebase upstream/main
 ```
 
 ## General Instructions
+### Java version
+We will be using Java 18 for this assignment. Make sure to download and install the correct Java version, and set 
+`JAVA_HOME` accordingly.
 ### Your first commit
 Edit the `config.properties` file and set the `TEAM_NAME` part with your team's name. Next, set the `DELIVERABLE` 
 variable to `1`. Keep in mind to update the latter in every deliverable, so the produced jars have the correct names.
