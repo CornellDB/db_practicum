@@ -2,9 +2,15 @@ import common.DBCatalog;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
+
+import net.sf.jsqlparser.expression.Alias;
 import net.sf.jsqlparser.parser.CCJSqlParserUtil;
+import net.sf.jsqlparser.schema.Table;
 import net.sf.jsqlparser.statement.Statement;
 import net.sf.jsqlparser.statement.Statements;
+import net.sf.jsqlparser.statement.select.FromItem;
+import net.sf.jsqlparser.statement.select.Join;
+import net.sf.jsqlparser.statement.select.PlainSelect;
 import net.sf.jsqlparser.statement.select.Select;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -32,11 +38,28 @@ public class ParserExample {
       logger.info(str);
 
       Statements statements =
-          CCJSqlParserUtil.parseStatements("SELECT * FROM tab1; SELECT * FROM tab2");
+          CCJSqlParserUtil.parseStatements(str);
+
       for (Statement statement : statements.getStatements()) {
         logger.info("Read statement: " + statement);
+
         Select select = (Select) statement;
+        PlainSelect plainSelect = (PlainSelect) select.getSelectBody();
+
+        Table fromItem = (Table) plainSelect.getFromItem();
+
         logger.info("Select body is " + select.getSelectBody());
+        logger.info("From item is " + fromItem);
+
+        Alias alias = fromItem.getAlias();
+        String name = fromItem.getName();
+
+        logger.info("Alias: " + alias);
+        logger.info("Name: " + name);
+
+        for (Join join : plainSelect.getJoins()) {
+          // Process joins..
+        }
       }
     } catch (Exception e) {
       System.err.println("Exception occurred during parsing");
