@@ -55,7 +55,7 @@ public class Compiler {
           Operator plan = queryPlanBuilder.buildPlan(statement);
 
           if (outputToFiles) {
-            File outfile = new File(outputDir + "/query" + counter++);
+            File outfile = new File(outputDir + "/query" + counter);
             plan.dump(new PrintStream(outfile));
           } else {
             plan.dump(System.out);
@@ -63,6 +63,8 @@ public class Compiler {
         } catch (Exception e) {
           logger.error(e.getMessage());
         }
+
+        ++counter;
       }
     } catch (Exception e) {
       System.err.println("Exception occurred in interpreter");
