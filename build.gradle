@@ -47,7 +47,7 @@ tasks.register('format', GoogleJavaFormat) {
 }
 
 tasks.withType(JavaCompile).configureEach {
-    options.release = 18
+    options.release = 21
 }
 
 jar {
