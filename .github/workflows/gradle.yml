@@ -33,7 +33,7 @@ jobs:
         arguments: assemble
         
   build_osx:
-    runs-on: macos_latest
+    runs-on: macos-latest
 
     steps:
     - uses: actions/checkout@v3
@@ -48,7 +48,7 @@ jobs:
         arguments: assemble
         
   build_windows:
-    runs-on: windows_latest
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v3
