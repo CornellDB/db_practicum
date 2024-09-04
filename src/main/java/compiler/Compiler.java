@@ -5,7 +5,7 @@ import common.QueryPlanBuilder;
 import java.io.File;
 import java.io.PrintStream;
 import java.nio.file.Files;
-import java.nio.file.Path;
+import java.nio.file.Paths;
 import net.sf.jsqlparser.parser.CCJSqlParserUtil;
 import net.sf.jsqlparser.statement.Statement;
 import net.sf.jsqlparser.statement.Statements;
@@ -38,7 +38,7 @@ public class Compiler {
     outputDir = args[1];
     DBCatalog.getInstance().setDataDirectory(inputDir + "/db");
     try {
-      String str = Files.readString(Path.of(inputDir + "/queries.sql"));
+      String str = Files.readString(Paths.get(inputDir + "/queries.sql"));
       Statements statements = CCJSqlParserUtil.parseStatements(str);
       QueryPlanBuilder queryPlanBuilder = new QueryPlanBuilder();
 
